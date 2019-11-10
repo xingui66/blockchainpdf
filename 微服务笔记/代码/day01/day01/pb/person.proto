@@ -1,0 +1,39 @@
+//版本号  默认使用2.0
+syntax = "proto3";
+
+//指定包名
+package pb;
+
+//标示位被系统占用的是 19000  19999
+message Stu{
+    int32 score = 1;
+    string name = 3;
+    //放切片
+    repeated string ClassName = 4;
+    //message嵌套
+    Teacher t = 5;
+    //枚举
+    Sex s = 6;
+
+    oneof data{
+        string parentName = 7;
+        int32 age = 8;
+    };
+}
+
+//联合体   类型在编译期不确定,在执行期确定
+
+enum Sex{
+    Man = 0;
+    Women = 1;
+}
+message Teacher{
+    string name = 1;
+    int32 age = 2;
+}
+
+
+//定义rpc服务
+service HelloWorld{
+    rpc CallFunc(Stu)returns(Teacher);
+}
